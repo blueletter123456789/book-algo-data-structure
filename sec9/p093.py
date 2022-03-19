@@ -4,10 +4,6 @@ class NotCorrectBracketsError(Exception):
     def __init__(self, *args: object):
         pass
 
-    def __str__(self):
-        return 'not correct value'
-
-
 # input example: (()(())())(()())
 # ( ( ) ( ( ) ) ( ) ) (  (  )  (  )  )
 # 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
@@ -19,7 +15,7 @@ try:
     for i in range(len(s)):
         # print(stack_list)
         if s[i] not in symbol_list:
-            raise ValueError('input is in no brackets')
+            raise ValueError
         if s[i] == '(':
             stack_list.append([i, s[i]])
         else:
@@ -33,8 +29,8 @@ try:
     if len(stack_list) > 0:
         raise NotCorrectBracketsError
 except NotCorrectBracketsError as err:
-    raise err
+    print('not correct value')
 except ValueError as ex:
-    raise ex
+    print('input is in no brackets')
 else:
     print(idx_list)
