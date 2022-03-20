@@ -36,9 +36,8 @@ for i in range(m):
         uni.unite(l[j][0], l[j][1])
     cnt = 0
     for j in range(1, n+1):
-        print(f'{j=}, {uni.root(j)=}')
         if j == uni.root(j):
             cnt += 1
-    if cnt > 0:
+    if cnt > 1:
         ans += 1
 print(ans)
