@@ -26,6 +26,7 @@ class UnionFind(object):
     def uni_size(self, a):
         return self.size[self.root(a)]
 
+""" TLE source
 n, m = map(int, input().split())
 A = [0]*m
 B = [0]*m
@@ -50,3 +51,26 @@ for i in range(m):
                 if k != x and x not in seen:
                     cnt += v * y
     print(cnt)
+"""
+
+n, m = map(int, input().split())
+A = [0]*m
+B = [0]*m
+for i in range(m):
+    a, b = map(int, input().split())
+    A[i], B[i] = a-1, b-1
+uf = UnionFind(n)
+# 逆順の初期の組み合わせ: nC2
+cur = n*(n-1) // 2
+res = list()
+for i in range(m):
+    res.append(cur)
+    a, b = A[m-1-i], B[m-1-i]
+    if uf.is_same(a, b):
+        continue
+    sa, sb = uf.uni_size(a), uf.uni_size(b)
+    cur -= sa * sb
+    uf.unite(a, b)
+res = reversed(res)
+for i in res:
+    print(i)
