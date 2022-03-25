@@ -31,7 +31,7 @@ class UnionFind(object):
 n, k, l = map(int, input().split())
 road_uni = UnionFind(n)
 train_uni = UnionFind(n)
-both_map = [[0]*n for _ in range(n)]
+both_map = [defaultdict(int) for _ in range(n)]
 for i in range(k):
     a, b = map(int, input().split())
     road_uni.unite(a-1, b-1)
@@ -42,7 +42,9 @@ for i in range(n):
     root_road = road_uni.root(i)
     root_train = train_uni.root(i)
     both_map[root_road][root_train] += 1
+ans = list()
 for i in range(n):
     root_road = road_uni.root(i)
     root_train = train_uni.root(i)
-    print(both_map[root_road][root_train])
+    ans.append(str(both_map[root_road][root_train]))
+print(' '.join(ans))
