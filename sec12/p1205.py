@@ -67,18 +67,27 @@ def linear_search(lst, k):
     return select(lst, k)
 
 @cnt_time
+def wrapper_rec(lst, k):
+    return rec(lst, k)
+
 def rec(lst, k):
-    if len(lst) == 1:
+    len_lst = len(lst)
+    if len_lst == 1:
         return lst[0]
-    if len(lst) <= 100:
+    if len_lst <= 100:
         lst.sort()
         return lst[k-1]
-    median_lst = [lst[i*5:(i+1)*5] for i in range((len(lst)+4)//5)]
+    # median_lst = [lst[i * 5: (i + 1) * 5] 
+    #   for i in range((len(lst) + 4) // 5)]
+    # median_lst = [lst[i*5+2] if i*5+2 <= len(lst)-1 else len(lst)-1 
+        # for i in range((len(lst)+4)//5)]
+    median_lst = [lst[i+50] for i in range(0, len_lst-100, 100)]
+    median_lst.append(lst[len_lst-1])
 
-    m = rec(median_lst, len(median_lst)//100)
+    m = rec(median_lst, len_lst//200)
 
     p, q, r = list(), list(), list()
-    for i in range(len(lst)):
+    for i in range(len_lst):
         if lst[i] < m:
             p.append(lst[i])
         elif lst[i] == m:
@@ -93,14 +102,20 @@ def rec(lst, k):
     else:
         return rec(r, k - len(p) - len(q))
 
+@cnt_time
+def base_time(A):
+    len_A = len(A)
+    for _ in range(len_A):
+        pass
 
-n, k = map(int, input().split())
-lst = list(map(int, input().split()))
+# n, k = map(int, input().split())
+# lst = list(map(int, input().split()))
 
-# import random
-# k = 4
-# lst = [random.randint(0, 10**9) for _ in range(10**2)]
+import random
+k = 4
+lst = [random.randint(0, 10**9) for _ in range(10**7)]
 
 sort_func(lst, k)
-linear_search(lst, k)
-rec(lst, k)
+# linear_search(lst, k)
+base_time(lst)
+wrapper_rec(lst, k)
