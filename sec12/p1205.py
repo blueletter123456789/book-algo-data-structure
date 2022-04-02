@@ -75,8 +75,7 @@ def rec(lst, k):
     if len_lst == 1:
         return lst[0]
     if len_lst <= 100:
-        lst.sort()
-        return lst[k-1]
+        return sorted(lst)[k-1]
     # median_lst = [lst[i * 5: (i + 1) * 5] 
     #   for i in range((len(lst) + 4) // 5)]
     # median_lst = [lst[i*5+2] if i*5+2 <= len(lst)-1 else len(lst)-1 
