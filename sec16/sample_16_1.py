@@ -1,7 +1,7 @@
 class Edge(object):
     def __init__(self, r, f, t, c) -> None:
         self.rev = r
-        self.fro = f
+        self.fr = f
         self.to = t
         self.cap = c
 
@@ -26,7 +26,7 @@ class Graph():
         from_rev = len(self.lst[f])
         to_rev = len(self.lst[t])
         self.lst[f].append(Edge(to_rev, f, t, c))
-        self.lst[t].append(Edge(from_rev, f, t, c))
+        self.lst[t].append(Edge(from_rev, t, f, 0))
 
 class FordFulkurson():
     INF = 1 << 30
@@ -34,9 +34,9 @@ class FordFulkurson():
     def __init__(self) -> None:
         self.seen = list()
     
-    def fodfs(self, G, v, t, f=None):
-        if not f:
-            f = self.INF
+    def fodfs(self, G, v, t, f):
+        # if not f:
+        #     f = self.INF
         if v == t:
             return f
         self.seen[v] = True
@@ -56,7 +56,7 @@ class FordFulkurson():
         res = 0
         while True:
             self.seen = [False] * len(G)
-            flow = self.fodfs(G, s, t)
+            flow = self.fodfs(G, s, t, self.INF)
             if flow == 0:
                 return res
             res += flow
