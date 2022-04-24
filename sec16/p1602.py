@@ -58,9 +58,36 @@ class FordFulkerson(object):
                 return res
             res += flow
 
+INF = float('INF')
 n, m, s, t = map(int, input().split())
-G = Graph(n)
+s -= 1
+t -= 1
+
+dist = [[INF]*n for _ in range(n)]
+cap = [[INF]*n for _ in range(n)]
+dp = [[INF]*n for _ in range(n)]
 for _ in range(m):
     u, v, d, c = map(int, input().split())
-    G.add_edge(u-1, v-1, d)
+    u -= 1
+    v -= 1
+    dist[u][v] = d
+    cap[u][v] = c
+    dp[u][v] = d
+
+for i in range(n):
+    dp[i][i] = 0
+
+for k in range(n):
+    for i in range(n):
+        for j in range(n):
+            dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j])
+
+G = Graph(n)
+for u in range(n):
+    for v in range(n):
+        if u == v:
+            continue
+        if dp[s][t] == dp[s][u] + dist[u][v] + dp[v][t]:
+            G.add_edge(u, v, cap[u][v])
 ff = FordFulkerson()
+print(ff.solved(G, s, t))
