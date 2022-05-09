@@ -48,6 +48,7 @@ class Dinic(object):
         if v == t:
             return f
         for i in range(self.iter[v], len(G[v])):
+            self.iter[v] = i
             e = G[v][i]
             re = G.redge(e)
             if self.level[v] < self.level[e.to] and e.cap > 0:
